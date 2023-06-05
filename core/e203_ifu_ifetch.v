@@ -163,6 +163,11 @@ module e203_ifu_ifetch
     assign ir_pc_vld_set = pc_newpend_r & ifu_ir_i_ready & ~pipe_flush_req_real & ifu_rsp_need_replay;
     
     //The ir valid is cleared when it is accepted by EXU stage or the flush happening
+    assign ir_valid_clr = ifu_ir_o_hsked | (pipe_flush_hsked & ir_valid_r);
+    assign ir_pc_vld_clr = ir_valid_clr;
+
+    assign ir_valid_ena = ir_valid_set | ir_valid_clr;
+    assign ir_valid_nxt = ir_valid_set | ~ir_valid_clr;
     
 
 
